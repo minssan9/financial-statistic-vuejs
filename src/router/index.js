@@ -1,10 +1,33 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import store from '../store'
-
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
+
+// 동적 라우트 1번 
+let routes = [];
+function loadRoutes(){
+    const context = require.context("./views", true, /\.js$/);
+    return context.keys()
+        .map(context)
+        .map(m=> m.default)
+}
+
+const resourceRoutes = loadRoutes();
+resourceRoutes.forEach((route) => {
+  routes.push(route[0]);
+});
+
+// 동적 라우트 2번 
+// const routeFileList = require.context("./views", true, /\.js$/);
+// let routes = [];
+// routeFileList.keys().forEach(key => {
+//     let fileName = key.split('.js')[0];
+//     let filePath = `./views/${fileName.split('/')[1]}`;
+//     const routePath = require(`${filePath}`);
+//     routes = routes.concat(routePath.default);
+// });
+// routes.push({path: '*', component: Error});
+
 
 // const requireAuth = (to, from, next) => {
 //     !!store.state.access_token ? next() : next(`/login?returnPath=${encodeURIComponent(from.path)}`)
@@ -27,26 +50,8 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
     mode: 'history',
-
-    // 스크롤 클릭시 맨 위로
-    scrollBehavior(to, from, savedPosition) {
-        return {x: 0, y: 0}
-    },
-
-    routes: [
-        {
-            path: '/',
-            component: Home
-        },
-        // {
-        //     path: '/join',
-        //     component: Join
-        // },
-        // {
-        //     path: '/login',
-        //     component: Login
-        // },
-    ]
+    base: process.env.BASE_URL,
+    routes
 })
 
 export default router
