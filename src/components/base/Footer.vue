@@ -1,11 +1,10 @@
-<template>
-    <Footer class="footer mt-5 modal-footer bg-light">
-        <div class="container">
-            <p class="text-dark text-center">
-                Copyright © Voyagers 2020
-            </p>
-        </div>
-    </Footer>
+<template> 
+    <div class="container">
+        <a href="http://blog.voyagerss.com">Blog</a>
+        <p class="text-dark text-center">            
+            Copyright © Voyagers 2020
+        </p>
+    </div> 
 </template>
 
 <script>
