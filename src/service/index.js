@@ -14,22 +14,22 @@ export const setAuthInHeader = token => {
     axios.defaults.headers.common['Authorization'] = token ? 'Bearer ${token}' : null
 }
 
-const onUnauthorized = () => {
+export const onUnauthorized = (response) => {
     router.push('/login?returnPath=${encodeURIComponent(location.pathname)}')
     throw Error(response)
 }
-const onForbidden = (response) => {
+export const onForbidden = (response) => {
     alert('권한이 없습니다.')
     router.push('/')
     throw Error(response)
 }
 
-const onBadRequest = (response) => {
+export const onBadRequest = (response) => {
     alert('잘못된요청입니다.')
     throw Error(response)
 }
 
-const onNotFound = (response) => {
+export const onNotFound = (response) => {
     alert('잘못된 접근입니다.')
     throw Error(response)
 }
@@ -54,32 +54,34 @@ const authRequest = (method, url, data) => {
         })
 }
 
-const request = (method, url, data) => {
-    return axios({
-        method,
-        url: DOMAIN + url,
-        data,
 
-    })
-}
-
-const requestFile = (method, url, data) => {
-    return axios({
-        method,
-        url: DOMAIN + url,
-        data,
-        processData: false,
-        contentType: false
-
-    }).then(result => result)
-        .catch(error => error.response)
-}
 
 export const auth = {
     login(playload) {
         return authRequest('post', DOMAIN + '/oauth/token', playload)
     }
 }
+
+// const request = (method, url, data) => {
+//     return axios({
+//         method,
+//         url: DOMAIN + url,
+//         data,
+
+//     })
+// }
+
+// const requestFile = (method, url, data) => {
+//     return axios({
+//         method,
+//         url: DOMAIN + url,
+//         data,
+//         processData: false,
+//         contentType: false
+
+//     }).then(result => result)
+//         .catch(error => error.response)
+// }
 
 // export const account = {
 //     fetch() {

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs'
-import { requestFile, onBadRequest,onForbidden,onUnauthorized,onNotFound} from './index'
-import crudService from "./crudService";
+import { onBadRequest,onForbidden,onUnauthorized,onNotFound} from '@/service/index'
+import crudService from "@/service/crudService";
 
 const BadRequest = 400
 const Unauthorized = 401
@@ -36,7 +36,7 @@ export const account = {
     return crudService.save('/accounts/join/check', playload)
   },
   createFiles(playload) { 
-    return requestFile('post', `/accounts/files/${playload.accountId}`, playload.formData)
+    return crudService.fileDown(  `/accounts/files/${playload.accountId}`, playload.formData)
   }
 }
 

@@ -1,6 +1,5 @@
 import axios from "axios";
-import {onUnauthorized} from './index'
-import authHeader from "./auth";
+import { onBadRequest,onForbidden,onUnauthorized,onNotFound} from '@/service/index';
 
 const BadRequest = 400
 const Unauthorized = 401
@@ -29,7 +28,7 @@ const crudService = {
             else if (response.status == BadRequest) return onBadRequest(response)
             else if (response.status == NotFound) return onNotFound(response)
             throw Error(response)
-          });;
+          });
   },
   getDataByParam(route, data) {
     return axios.get('/api/' + route + "/params", data)
@@ -40,7 +39,7 @@ const crudService = {
             else if (response.status == BadRequest) return onBadRequest(response)
             else if (response.status == NotFound) return onNotFound(response)
             throw Error(response)
-          });;
+          });
   },
   update(route, data) {
     return axios.put('/api/' + route , data)
@@ -51,7 +50,7 @@ const crudService = {
             else if (response.status == BadRequest) return onBadRequest(response)
             else if (response.status == NotFound) return onNotFound(response)
             throw Error(response)
-          });;
+          });
   },
   save(route, data) {
     return axios.post('/api/' + route , data)
@@ -62,7 +61,7 @@ const crudService = {
             else if (response.status == BadRequest) return onBadRequest(response)
             else if (response.status == NotFound) return onNotFound(response)
             throw Error(response)
-          });;
+          });
   },
 
   fileUpload(route, data) {
@@ -79,7 +78,7 @@ const crudService = {
             else if (response.status == BadRequest) return onBadRequest(response)
             else if (response.status == NotFound) return onNotFound(response)
             throw Error(response)
-          });;
+          });
   },
   fileDown(route, data) {
     var param = {
