@@ -1,13 +1,14 @@
-import Home from "../../views/Home";  
-import Chart from "../../views/Chart";
+import menu from "@/views/menu";  
+import Chart from "@/views/Chart"; 
+import profile from "@/views/auth/profile";
 
 export default[
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    component: menu,
     children: [
       {path: '/chart', component: Chart},
+      {path: '/profile', component: profile}
     ]
   }
 ]

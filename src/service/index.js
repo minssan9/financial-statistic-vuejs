@@ -2,8 +2,7 @@ import axios from 'axios'
 import router from '../router'
 import qs from 'qs'
 
-// const DOMAIN = 'http://shop.voyagerss.com'
-const DOMAIN =  '/api/shop'
+const DOMAIN =  '/api'
 
 const BadRequest = 400
 const Unauthorized = 401
@@ -61,8 +60,7 @@ const request = (method, url, data) => {
         url: DOMAIN + url,
         data,
 
-    }).then(result => result)
-        .catch(error => error.response)
+    })
 }
 
 const requestFile = (method, url, data) => {
@@ -83,26 +81,26 @@ export const auth = {
     }
 }
 
-export const account = {
-    fetch() {
-        return request('get', DOMAIN + '/accounts')
-    },
-    create(playload) {
-        return request('post', DOMAIN + '/accounts', playload)
-    },
-    put(playload) {
-        return request('put', DOMAIN + '/accounts', playload)
-    },
-    fetchManager(playload) {
-        return request('get', DOMAIN + '/accounts/manager?page=${playload.page}&size=10&sort=id,DESC')
-    },
-    fetchManagerSearch(playload) {
-        return request('get', DOMAIN + '/accounts/manager/${playload.option}/${playload.keyword}?page=${playload.page}&size=10&sort=id,DESC')
-    },
-    idCheck(playload) {
-        return request('post', DOMAIN + '/accounts/join/check', playload)
-    },
-    createFiles(playload) {
-        return requestFile('post', DOMAIN + '/accounts/files/${playload.accountId}', playload.formData)
-    }
-}
+// export const account = {
+//     fetch() {
+//         return request('get', DOMAIN + '/accounts')
+//     },
+//     create(playload) {
+//         return request('post', DOMAIN + '/accounts', playload)
+//     },
+//     put(playload) {
+//         return request('put', DOMAIN + '/accounts', playload)
+//     },
+//     fetchManager(playload) {
+//         return request('get', DOMAIN + '/accounts/manager?page=${playload.page}&size=10&sort=id,DESC')
+//     },
+//     fetchManagerSearch(playload) {
+//         return request('get', DOMAIN + '/accounts/manager/${playload.option}/${playload.keyword}?page=${playload.page}&size=10&sort=id,DESC')
+//     },
+//     idCheck(playload) {
+//         return request('post', DOMAIN + '/accounts/join/check', playload)
+//     },
+//     createFiles(playload) {
+//         return requestFile('post', DOMAIN + '/accounts/files/${playload.accountId}', playload.formData)
+//     }
+// }

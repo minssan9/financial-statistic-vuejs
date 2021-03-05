@@ -1,22 +1,26 @@
 <template>
-  <div>
-    <!--  <img alt="Vue logo" src="./assets/logo.png">-->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-
-    
-    <router-link to="/">
-      Home
-    </router-link>
+  <div> 
+    <button class="btn" v-on="selectType()">한국</button>
+    <button class="btn" v-on="selectType()">해외</button>
+    <korea/>   
+    <global/>
   </div>
 </template>
 
 <script>
-// import HelloWorld from '../components/HelloWorld.vue'
+import Global from '@/components/fn/global.vue'
+ import korea from '@/components/fn/korea.vue'
 
 export default {
   name: 'Chart',
   components: {
-    // HelloWorld
+    korea,
+    Global
+  },
+  methods: {
+    selectType(){
+
+    }
   }
 }
 </script> 
