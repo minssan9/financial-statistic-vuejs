@@ -20,7 +20,7 @@
 # EXPOSE 80
 # EXPOSE 18180
 # EXPOSE 443
-
+ 
 
 
 #build stage
