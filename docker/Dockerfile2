@@ -1,0 +1,32 @@
+
+#build stage
+#pull node image
+FROM node as build-stage
+# 관리자 email
+MAINTAINER minssan9 minssan9@gmail.com
+#working directory
+WORKDIR /app
+#add all files from local to docker
+ADD . .
+#install by node all dependancies
+RUN npm install
+#build by node  output dir -> docker/dist
+RUN npm run build
+# ------ node install & build vuejs project
+ 
+ 
+FROM nginx:1.13
+COPY --from=build-stage /app/dist                /usr/share/nginx/html/
+COPY etc/nginx/nginx.conf /etc/nginx/
+COPY etc/nginx/conf.d     /etc/nginx/conf.d/
+
+VOLUME etc/nginx/conf.d /etc/nginx/conf.d/
+HEALTHCHECK --interval=5s \
+            --timeout=5s \
+            CMD curl -f http://127.0.0.1:80 || exit 1
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
+
+

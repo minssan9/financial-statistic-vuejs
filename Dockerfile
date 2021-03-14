@@ -1,52 +1,17 @@
-#build stage
-#pull node image
-FROM node as build-stage
-# 관리자 email
-MAINTAINER minssan9 minssan9@gmail.com
-#working directory
+# build stage
+FROM node:lts-alpine as build-stage
 WORKDIR /app
-#add all files from local to docker
-ADD . .
-#install by node all dependancies
-RUN npm install
-#build by node  output dir -> docker/dist
+COPY package*.json ./
+RUN npm install --production
+COPY . .
 RUN npm run build
-# ------ node install & build vuejs project
 
+# production stage
+FROM nginx:stable-alpine as production-stage
 
-#production stage
-#pull image nginx
-FROM nginx as production
-#copy from build output dir -> docker nginx dir
-COPY dist/                /usr/share/nginx/html/
-#copy from this project etc/nginx/conf -> docker nginx dir
-COPY etc/nginx/nginx.conf /etc/nginx/
-#copy from this project etc/nginx/conf -> docker nginx dir
-COPY etc/nginx/conf.d     /etc/nginx/conf.d/
-# Define mountable directories.
-VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
-# Define working directory.
-WORKDIR /etc/nginx
-# Open HTTP port for nginx
+COPY docker/etc/nginx/nginx.conf /etc/nginx/
+COPY docker/etc/nginx/conf.d     /etc/nginx/conf.d/
+
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 80
-EXPOSE 18180
-EXPOSE 443
-#run nginx -g : global directice  daemon off : foreground
-#-g global디렉티스설정	지정한 global디렉티브의 설정으로 nginx를 기동 (부하실험등...)
 CMD ["nginx", "-g", "daemon off;"]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
